@@ -37,6 +37,10 @@
       titleAlt: "Impossible Triangle",
       documentTitle: "不可能三角生成器｜三圆叠色梗图",
       metaDescription: "免费在线不可能三角生成器：把快、好、便宜那种三圆维恩图做成颜料叠色梗图，改文字换配色，导出透明底 PNG。",
+      ogDescription: "三个圆按颜料叠色，红蓝成紫、黄蓝成绿。改文字、换配色，导出透明底 PNG。",
+      ogImageAlt: "快、便宜、好三圆叠色，中间写着不可能",
+      ogSiteName: "不可能三角生成器",
+      ogImage: "https://tri.ryanstarfox.top/og.png",
       eyebrow: "颜料 · 红黄蓝叠色",
       lede: "三个愿望叠在一起，中间那个就是梗。按颜料混合，导出 PNG。",
       download: "下载 PNG",
@@ -85,6 +89,10 @@
       titleAlt: "不可能三角生成器",
       documentTitle: "Impossible Triangle Generator",
       metaDescription: "Make an impossible-triangle meme in the browser. Three circles mix like paint — edit labels, pick colors, export a transparent PNG.",
+      ogDescription: "Three circles mix like paint: red+blue=purple, blue+yellow=green, yellow+red=orange. Edit labels and export a transparent PNG.",
+      ogImageAlt: "Fast, cheap, and good overlapping; the center says Impossible",
+      ogSiteName: "Impossible Triangle",
+      ogImage: "https://tri.ryanstarfox.top/og-en.png",
       eyebrow: "Pigment · RYB mixing",
       lede: "Three wishes, stacked. The overlap is the joke. Paint mixing, export PNG.",
       download: "Download PNG",
@@ -168,9 +176,15 @@
     return (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en";
   }
 
+  function langFromUrl() {
+    const v = new URLSearchParams(location.search).get("lang");
+    return v === "zh" || v === "en" ? v : null;
+  }
+
   const stored = safeParse(localStorage.getItem("impossible-triangle"));
+  const urlLang = langFromUrl();
   const savedLang = stored?.langMode;
-  const langMode = savedLang === "zh" || savedLang === "en" ? savedLang : "system";
+  const langMode = urlLang || (savedLang === "zh" || savedLang === "en" ? savedLang : "system");
   const initialLang = langMode === "system" ? detectSystemLang() : langMode;
 
   const state = {
@@ -555,6 +569,57 @@
     return state.langMode === "system" ? detectSystemLang() : state.langMode;
   }
 
+  function setMeta(selector, attr, value) {
+    const el = document.querySelector(selector);
+    if (el && value) el.setAttribute(attr, value);
+  }
+
+  function applySeo(pack) {
+    const locale = state.lang === "zh" ? "zh_CN" : "en_US";
+    const alternate = state.lang === "zh" ? "en_US" : "zh_CN";
+    const seoEn = state.langMode === "en" || langFromUrl() === "en";
+    const pageUrl = seoEn ? "https://tri.ryanstarfox.top/?lang=en" : "https://tri.ryanstarfox.top/";
+    document.title = pack.documentTitle;
+    setMeta('meta[name="description"]', "content", pack.metaDescription);
+    setMeta('meta[property="og:locale"]', "content", locale);
+    setMeta('meta[property="og:locale:alternate"]', "content", alternate);
+    setMeta('meta[property="og:site_name"]', "content", pack.ogSiteName);
+    setMeta('meta[property="og:title"]', "content", pack.documentTitle);
+    setMeta('meta[property="og:description"]', "content", pack.ogDescription);
+    setMeta('meta[property="og:url"]', "content", pageUrl);
+    setMeta('meta[property="og:image"]', "content", pack.ogImage);
+    setMeta('meta[property="og:image:alt"]', "content", pack.ogImageAlt);
+    setMeta('meta[name="twitter:title"]', "content", pack.documentTitle);
+    setMeta('meta[name="twitter:description"]', "content", pack.ogDescription);
+    setMeta('meta[name="twitter:image"]', "content", pack.ogImage);
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute("href", pageUrl);
+    const ld = document.querySelector('script[type="application/ld+json"]');
+    if (ld) {
+      try {
+        const data = JSON.parse(ld.textContent);
+        data.name = pack.ogSiteName;
+        data.alternateName = pack.titleAlt;
+        data.description = pack.metaDescription;
+        data.inLanguage = ["zh-CN", "en"];
+        data.image = pack.ogImage;
+        data.url = pageUrl;
+        ld.textContent = JSON.stringify(data);
+      } catch {
+        /* keep the static JSON-LD if it cannot be parsed */
+      }
+    }
+  }
+
+  function syncLangUrl() {
+    const url = new URL(location.href);
+    if (state.langMode === "en") url.searchParams.set("lang", "en");
+    else url.searchParams.delete("lang");
+    const next = `${url.pathname}${url.search}${url.hash}`;
+    const cur = `${location.pathname}${location.search}${location.hash}`;
+    if (next !== cur) history.replaceState(null, "", next);
+  }
+
   function applyI18n() {
     const next = effectiveLang();
     const prev = state.lang;
@@ -568,9 +633,7 @@
     }
     const pack = I18N[state.lang];
     els.html.lang = state.lang === "zh" ? "zh-CN" : "en";
-    document.title = pack.documentTitle;
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc && pack.metaDescription) desc.setAttribute("content", pack.metaDescription);
+    applySeo(pack);
     document.querySelectorAll("[data-i18n]").forEach((node) => {
       const key = node.getAttribute("data-i18n");
       if (pack[key]) node.textContent = pack[key];
@@ -762,6 +825,7 @@
       const next = btn.dataset.lang;
       if (next === state.langMode) return;
       state.langMode = next;
+      syncLangUrl();
       applyI18n();
       syncForm();
       persist();
