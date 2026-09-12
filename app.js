@@ -35,7 +35,8 @@
     zh: {
       title: "不可能三角生成器",
       titleAlt: "Impossible Triangle",
-      documentTitle: "不可能三角生成器",
+      documentTitle: "不可能三角生成器｜三圆叠色梗图",
+      metaDescription: "免费在线不可能三角生成器：把快、好、便宜那种三圆维恩图做成颜料叠色梗图，改文字换配色，导出透明底 PNG。",
       eyebrow: "颜料 · 红黄蓝叠色",
       lede: "三个愿望叠在一起，中间那个就是梗。按颜料混合，导出 PNG。",
       download: "下载 PNG",
@@ -76,12 +77,14 @@
       bgCustom: "自定义",
       bgColor: "背景颜色",
       footer: "叠色方式：颜料混合。红+蓝=紫，蓝+黄=绿，黄+红=橙。",
+      repoLink: "GitHub 源码",
       filename: "不可能三角",
     },
     en: {
       title: "Impossible Triangle",
       titleAlt: "不可能三角生成器",
-      documentTitle: "Impossible Triangle",
+      documentTitle: "Impossible Triangle Generator",
+      metaDescription: "Make an impossible-triangle meme in the browser. Three circles mix like paint — edit labels, pick colors, export a transparent PNG.",
       eyebrow: "Pigment · RYB mixing",
       lede: "Three wishes, stacked. The overlap is the joke. Paint mixing, export PNG.",
       download: "Download PNG",
@@ -122,6 +125,7 @@
       bgCustom: "Custom",
       bgColor: "Background",
       footer: "Pigment mixing: red+blue=purple, blue+yellow=green, yellow+red=orange.",
+      repoLink: "Source on GitHub",
       filename: "impossible-triangle",
     },
   };
@@ -565,6 +569,8 @@
     const pack = I18N[state.lang];
     els.html.lang = state.lang === "zh" ? "zh-CN" : "en";
     document.title = pack.documentTitle;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc && pack.metaDescription) desc.setAttribute("content", pack.metaDescription);
     document.querySelectorAll("[data-i18n]").forEach((node) => {
       const key = node.getAttribute("data-i18n");
       if (pack[key]) node.textContent = pack[key];

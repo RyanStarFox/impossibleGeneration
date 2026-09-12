@@ -324,6 +324,7 @@ html[data-theme="dark"] .sheet[data-bg="transparent"] {
 .btn-press:focus-visible,
 .seg-btn:focus-visible,
 .preset-btn:focus-visible,
+.repo-link:focus-visible,
 input:focus-visible {
   outline: 2px solid var(--press);
   outline-offset: 2px;
@@ -510,9 +511,30 @@ input[type="color"] {
 }
 
 .colophon {
-  padding: 0 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding: 16px 0 40px;
   border-top: 1px solid var(--rule-soft);
-  padding-top: 16px;
+}
+
+.colophon p {
+  margin: 0;
+}
+
+.repo-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--press);
+}
+
+.repo-link:hover {
+  color: var(--press);
 }
 
 @media (max-width: 900px) {
