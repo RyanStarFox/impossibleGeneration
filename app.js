@@ -551,10 +551,16 @@
     });
   }
 
-  function preview() {
+  let previewRaf = 0;
+  let lastPreviewSize = 0;
+
+  function preview({ fromResize = false } = {}) {
     const css = Math.min(1000, Math.round(els.canvas.clientWidth || 640));
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    renderToCanvas(els.canvas, Math.round(css * dpr));
+    const pixelSize = Math.round(css * dpr);
+    if (fromResize && pixelSize === lastPreviewSize) return;
+    lastPreviewSize = pixelSize;
+    renderToCanvas(els.canvas, pixelSize);
     els.sheet.dataset.bg = state.bgMode === "transparent" ? "transparent" : "solid";
     if (state.bgMode === "custom") {
       els.sheet.style.background = state.bgColor;
@@ -563,6 +569,15 @@
     } else {
       els.sheet.style.background = "";
     }
+  }
+
+  function schedulePreview() {
+    if (previewRaf) return;
+    previewRaf = requestAnimationFrame(() => {
+      previewRaf = 0;
+      if (document.hidden) return;
+      preview({ fromResize: true });
+    });
   }
 
   function effectiveLang() {
@@ -855,7 +870,7 @@
     persist();
     preview();
   });
-  window.addEventListener("resize", () => preview());
+  window.addEventListener("resize", schedulePreview);
 
   applyI18n();
   applyTheme();
