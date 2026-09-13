@@ -54,7 +54,9 @@
       labelAC: "上 ∩ 右",
       labelBC: "左 ∩ 右",
       labelCenter: "三圆交汇",
-      fontSize: "字号",
+      fontSizeCenter: "三重叠字号",
+      fontSizeOverlap: "二重叠字号",
+      fontSizeExclusive: "不重叠字号",
       overlapDist: "重叠文字到中心",
       exclusiveRatio: "独占文字到中心",
       labelColor: "文字颜色",
@@ -106,7 +108,9 @@
       labelAC: "Top ∩ Right",
       labelBC: "Left ∩ Right",
       labelCenter: "All three",
-      fontSize: "Type size",
+      fontSizeCenter: "Triple overlap size",
+      fontSizeOverlap: "Double overlap size",
+      fontSizeExclusive: "Exclusive size",
       overlapDist: "Overlap to center",
       exclusiveRatio: "Exclusive to center",
       labelColor: "Label color",
@@ -146,7 +150,9 @@
     sheet: document.querySelector(".sheet"),
     download: document.getElementById("download"),
     autoContrast: document.getElementById("auto-contrast"),
-    fontSize: document.getElementById("font-size"),
+    fontSizeCenter: document.getElementById("font-size-center"),
+    fontSizeOverlap: document.getElementById("font-size-overlap"),
+    fontSizeExclusive: document.getElementById("font-size-exclusive"),
     overlapDist: document.getElementById("overlap-dist"),
     exclusiveRatio: document.getElementById("exclusive-ratio"),
     strokeEnabled: document.getElementById("stroke-enabled"),
@@ -196,7 +202,9 @@
     colors: { ...PRESETS.morandi, ...(stored?.colors || {}) },
     labelColor: stored?.labelColor || "#1C1714",
     autoContrast: stored?.autoContrast ?? true,
-    fontSize: stored?.fontSize || 32,
+    fontSizeCenter: stored?.fontSizeCenter ?? stored?.fontSize ?? 32,
+    fontSizeOverlap: stored?.fontSizeOverlap ?? stored?.fontSize ?? 32,
+    fontSizeExclusive: stored?.fontSizeExclusive ?? stored?.fontSize ?? 32,
     overlapDist: stored?.overlapDist ?? 0.46,
     exclusiveRatio: stored?.exclusiveRatio ?? 0.66,
     strokeEnabled: stored?.strokeEnabled ?? false,
@@ -226,7 +234,9 @@
         colors: state.colors,
         labelColor: state.labelColor,
         autoContrast: state.autoContrast,
-        fontSize: state.fontSize,
+        fontSizeCenter: state.fontSizeCenter,
+        fontSizeOverlap: state.fontSizeOverlap,
+        fontSizeExclusive: state.fontSizeExclusive,
         overlapDist: state.overlapDist,
         exclusiveRatio: state.exclusiveRatio,
         strokeEnabled: state.strokeEnabled,
@@ -543,9 +553,18 @@
       drawStrokedCircle(ctx, circles.right, R, state.strokeColor, sw);
     }
 
-    const fontPx = (state.fontSize / 1000) * size;
+    const fontByKey = {
+      top: state.fontSizeExclusive,
+      left: state.fontSizeExclusive,
+      right: state.fontSizeExclusive,
+      ab: state.fontSizeOverlap,
+      ac: state.fontSizeOverlap,
+      bc: state.fontSizeOverlap,
+      center: state.fontSizeCenter,
+    };
     const maxW = R * 0.92;
     KEYS.forEach((key) => {
+      const fontPx = (fontByKey[key] / 1000) * size;
       const fill = state.autoContrast ? inkOn(fills[key]) : state.labelColor;
       drawLabel(ctx, state.texts[key], labels[key], fill, fontPx, maxW);
     });
@@ -680,7 +699,9 @@
     els.colors.label.value = state.labelColor;
     els.hex.label.value = state.labelColor;
     els.autoContrast.checked = state.autoContrast;
-    els.fontSize.value = String(state.fontSize);
+    els.fontSizeCenter.value = String(state.fontSizeCenter);
+    els.fontSizeOverlap.value = String(state.fontSizeOverlap);
+    els.fontSizeExclusive.value = String(state.fontSizeExclusive);
     els.overlapDist.value = String(Math.round(state.overlapDist * 100));
     els.exclusiveRatio.value = String(Math.round(state.exclusiveRatio * 100));
     els.strokeEnabled.checked = state.strokeEnabled;
@@ -786,8 +807,18 @@
     persist();
     preview();
   });
-  els.fontSize.addEventListener("input", () => {
-    state.fontSize = Number(els.fontSize.value);
+  els.fontSizeCenter.addEventListener("input", () => {
+    state.fontSizeCenter = Number(els.fontSizeCenter.value);
+    persist();
+    preview();
+  });
+  els.fontSizeOverlap.addEventListener("input", () => {
+    state.fontSizeOverlap = Number(els.fontSizeOverlap.value);
+    persist();
+    preview();
+  });
+  els.fontSizeExclusive.addEventListener("input", () => {
+    state.fontSizeExclusive = Number(els.fontSizeExclusive.value);
     persist();
     preview();
   });
