@@ -130,6 +130,31 @@
         <form id="controls" onsubmit="return false">
           <div id="panel-basic" class="tab-panel" role="tabpanel" aria-labelledby="tab-basic">
             <fieldset>
+              <legend data-i18n="stockLegend">纸张</legend>
+              <div class="seg stock-seg" role="radiogroup" aria-label="Background">
+                <label class="seg-btn">
+                  <input type="radio" name="bg-mode" value="white" />
+                  <span data-i18n="bgWhite">白底</span>
+                </label>
+                <label class="seg-btn">
+                  <input type="radio" name="bg-mode" value="transparent" checked />
+                  <span data-i18n="bgTransparent">透明底</span>
+                </label>
+                <label class="seg-btn">
+                  <input type="radio" name="bg-mode" value="custom" />
+                  <span data-i18n="bgCustom">自定义</span>
+                </label>
+              </div>
+              <label class="field color-field bg-custom-field" hidden>
+                <span data-i18n="bgColor">背景颜色</span>
+                <span class="swatch-wrap">
+                  <input type="color" id="bg-color" value="#FFFFFF" />
+                  <input type="text" id="bg-color-hex" class="hex" spellcheck="false" value="#FFFFFF" />
+                </span>
+              </label>
+            </fieldset>
+
+            <fieldset>
               <legend data-i18n="titleLegend">标题</legend>
               <label class="check">
                 <input type="checkbox" id="title-enabled" />
@@ -295,31 +320,6 @@
                   <input type="range" id="stroke-width" min="1" max="16" value="4" />
                 </label>
               </div>
-            </fieldset>
-
-            <fieldset>
-              <legend data-i18n="stockLegend">纸张</legend>
-              <div class="seg stock-seg" role="radiogroup" aria-label="Background">
-                <label class="seg-btn">
-                  <input type="radio" name="bg-mode" value="white" />
-                  <span data-i18n="bgWhite">白底</span>
-                </label>
-                <label class="seg-btn">
-                  <input type="radio" name="bg-mode" value="transparent" checked />
-                  <span data-i18n="bgTransparent">透明底</span>
-                </label>
-                <label class="seg-btn">
-                  <input type="radio" name="bg-mode" value="custom" />
-                  <span data-i18n="bgCustom">自定义</span>
-                </label>
-              </div>
-              <label class="field color-field bg-custom-field" hidden>
-                <span data-i18n="bgColor">背景颜色</span>
-                <span class="swatch-wrap">
-                  <input type="color" id="bg-color" value="#FFFFFF" />
-                  <input type="text" id="bg-color-hex" class="hex" spellcheck="false" value="#FFFFFF" />
-                </span>
-              </label>
             </fieldset>
           </div>
 
