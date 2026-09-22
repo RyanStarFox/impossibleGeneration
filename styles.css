@@ -629,14 +629,46 @@ input[type="color"] {
 }
 
 @media (max-width: 900px) {
-  .masthead,
   .bench {
     display: flex;
     flex-direction: column;
   }
 
+  .masthead {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .brand {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .brand .eyebrow {
+    display: none;
+  }
+
+  .brand .lede {
+    display: none;
+  }
+
+  h1 {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .title-primary {
+    font-size: 18px;
+  }
+
+  .title-secondary {
+    display: none;
+  }
+
   .mast-actions {
-    justify-content: flex-start;
+    justify-content: flex-end;
+    align-self: center;
+    margin-left: auto;
   }
 
   .ticket {
