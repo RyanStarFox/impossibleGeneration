@@ -10,6 +10,18 @@
     candy: { top: "#FF6B9D", left: "#6EC6FF", right: "#FFE566" },
   };
 
+  const FONT_PRESETS = [
+    "Noto Sans SC",
+    "Noto Serif SC",
+    "ZCOOL XiaoWei",
+    "ZCOOL QingKe HuangYou",
+    "Ma Shan Zheng",
+    "Long Cang",
+    "Bricolage Grotesque",
+    "IBM Plex Sans",
+    "IBM Plex Mono",
+  ];
+
   const SAMPLE = {
     zh: {
       top: "快",
@@ -46,22 +58,59 @@
       download: "下载 PNG",
       lineBreak: "Shift+Enter 换行",
       exportHint: "预览即成图。透明底会保留圆外的透明像素。",
+      tabBasic: "基础设置",
+      tabAdvanced: "高级设置",
+      titleLegend: "标题",
+      titleEnabled: "显示标题",
+      titleLine1: "标题第 1 行",
+      titleLine2: "标题第 2 行（可选）",
       copyLegend: "文字",
       labelTop: "上圆",
       labelLeft: "左圆",
       labelRight: "右圆",
+      labelTopOne: "上圆",
+      labelLeftOne: "左圆",
+      labelRightOne: "右圆",
+      labelTopTwo: "下圆",
+      labelLeftTwo: "左上",
+      labelRightTwo: "右上",
       labelAB: "上 ∩ 左",
       labelAC: "上 ∩ 右",
       labelBC: "左 ∩ 右",
+      labelABOne: "上 ∩ 左",
+      labelACOne: "上 ∩ 右",
+      labelBCOne: "左 ∩ 右",
+      labelABTwo: "下 ∩ 左",
+      labelACTwo: "下 ∩ 右",
+      labelBCTwo: "左 ∩ 右",
       labelCenter: "三圆交汇",
-      fontSizeCenter: "三重叠字号",
-      fontSizeOverlap: "二重叠字号",
-      fontSizeExclusive: "不重叠字号",
-      overlapDist: "重叠文字到中心",
-      exclusiveRatio: "独占文字到中心",
-      labelColor: "文字颜色",
       autoContrast: "按叠色自动黑白字",
+      layoutLegend: "布局",
+      layoutOneTop: "上一下二",
+      layoutTwoTop: "上二下一",
+      rotateColors: "颜色顺时针",
+      flipColors: "颜色左右翻",
+      rotateTexts: "文字顺时针",
+      flipTexts: "文字左右翻",
+      rearrangeHint: "只重排槽位，不旋转画面。",
       inkLegend: "油墨",
+      inkCustomLegend: "图片颜色",
+      styleLegend: "文字样式",
+      styleTitle: "标题",
+      styleExclusive: "一重叠",
+      styleOverlap: "二重叠",
+      styleCenter: "三重叠",
+      styleColor: "颜色",
+      styleFont: "字体",
+      styleSize: "字号",
+      titleGap: "离图距离",
+      titleFont1: "第 1 行字体",
+      titleFont2: "第 2 行字体",
+      titleSize1: "第 1 行字号",
+      titleSize2: "第 2 行字号",
+      overlapDist: "到中心距离",
+      exclusiveRatio: "到中心距离",
+      fontSystem: "系统字体…",
       presetMorandi: "莫兰迪",
       presetStandard: "标准红黄蓝",
       presetPastel: "马卡龙",
@@ -73,6 +122,12 @@
       colorTop: "上圆颜色",
       colorLeft: "左圆颜色",
       colorRight: "右圆颜色",
+      colorTopOne: "上圆颜色",
+      colorLeftOne: "左圆颜色",
+      colorRightOne: "右圆颜色",
+      colorTopTwo: "下圆颜色",
+      colorLeftTwo: "左上颜色",
+      colorRightTwo: "右上颜色",
       plateLegend: "印版",
       strokeEnabled: "圆圈描边",
       strokeColor: "描边颜色",
@@ -82,8 +137,6 @@
       bgTransparent: "透明底",
       bgCustom: "自定义",
       bgColor: "背景颜色",
-      footer: "叠色方式：颜料混合。红+蓝=紫，蓝+黄=绿，黄+红=橙。",
-      repoLink: "GitHub 源码",
       filename: "不可能三角",
     },
     en: {
@@ -100,22 +153,59 @@
       download: "Download PNG",
       lineBreak: "Shift+Enter for a new line",
       exportHint: "What you see is what exports. Transparent keeps pixels outside the circles.",
+      tabBasic: "Basic",
+      tabAdvanced: "Advanced",
+      titleLegend: "Title",
+      titleEnabled: "Show title",
+      titleLine1: "Title line 1",
+      titleLine2: "Title line 2 (optional)",
       copyLegend: "Copy",
       labelTop: "Top",
       labelLeft: "Left",
       labelRight: "Right",
+      labelTopOne: "Top",
+      labelLeftOne: "Left",
+      labelRightOne: "Right",
+      labelTopTwo: "Bottom",
+      labelLeftTwo: "Top left",
+      labelRightTwo: "Top right",
       labelAB: "Top ∩ Left",
       labelAC: "Top ∩ Right",
       labelBC: "Left ∩ Right",
+      labelABOne: "Top ∩ Left",
+      labelACOne: "Top ∩ Right",
+      labelBCOne: "Left ∩ Right",
+      labelABTwo: "Bottom ∩ Left",
+      labelACTwo: "Bottom ∩ Right",
+      labelBCTwo: "Left ∩ Right",
       labelCenter: "All three",
-      fontSizeCenter: "Triple overlap size",
-      fontSizeOverlap: "Double overlap size",
-      fontSizeExclusive: "Exclusive size",
-      overlapDist: "Overlap to center",
-      exclusiveRatio: "Exclusive to center",
-      labelColor: "Label color",
       autoContrast: "Auto black / white labels",
+      layoutLegend: "Layout",
+      layoutOneTop: "1 up · 2 down",
+      layoutTwoTop: "2 up · 1 down",
+      rotateColors: "Rotate colors",
+      flipColors: "Flip colors",
+      rotateTexts: "Rotate copy",
+      flipTexts: "Flip copy",
+      rearrangeHint: "Remaps slots only — no visual rotate.",
       inkLegend: "Ink",
+      inkCustomLegend: "Circle colors",
+      styleLegend: "Type styles",
+      styleTitle: "Title",
+      styleExclusive: "Exclusive",
+      styleOverlap: "Double",
+      styleCenter: "Triple",
+      styleColor: "Color",
+      styleFont: "Font",
+      styleSize: "Size",
+      titleGap: "Gap to diagram",
+      titleFont1: "Line 1 font",
+      titleFont2: "Line 2 font",
+      titleSize1: "Line 1 size",
+      titleSize2: "Line 2 size",
+      overlapDist: "Distance to center",
+      exclusiveRatio: "Distance to center",
+      fontSystem: "System font…",
       presetMorandi: "Morandi",
       presetStandard: "Pure RYB",
       presetPastel: "Pastel",
@@ -127,6 +217,12 @@
       colorTop: "Top color",
       colorLeft: "Left color",
       colorRight: "Right color",
+      colorTopOne: "Top color",
+      colorLeftOne: "Left color",
+      colorRightOne: "Right color",
+      colorTopTwo: "Bottom color",
+      colorLeftTwo: "Top-left color",
+      colorRightTwo: "Top-right color",
       plateLegend: "Plate",
       strokeEnabled: "Circle stroke",
       strokeColor: "Stroke color",
@@ -136,13 +232,12 @@
       bgTransparent: "Transparent",
       bgCustom: "Custom",
       bgColor: "Background",
-      footer: "Pigment mixing: red+blue=purple, blue+yellow=green, yellow+red=orange.",
-      repoLink: "Source on GitHub",
       filename: "impossible-triangle",
     },
   };
 
   const KEYS = ["top", "left", "right", "ab", "ac", "bc", "center"];
+  const CUSTOM_FONT = "__custom__";
 
   const els = {
     html: document.documentElement,
@@ -150,6 +245,13 @@
     sheet: document.querySelector(".sheet"),
     download: document.getElementById("download"),
     autoContrast: document.getElementById("auto-contrast"),
+    titleEnabled: document.getElementById("title-enabled"),
+    titleFields: document.getElementById("title-fields"),
+    titleLine1: document.getElementById("title-line1"),
+    titleLine2: document.getElementById("title-line2"),
+    titleGap: document.getElementById("title-gap"),
+    titleSize1: document.getElementById("title-size1"),
+    titleSize2: document.getElementById("title-size2"),
     fontSizeCenter: document.getElementById("font-size-center"),
     fontSizeOverlap: document.getElementById("font-size-overlap"),
     fontSizeExclusive: document.getElementById("font-size-exclusive"),
@@ -159,12 +261,21 @@
     strokeWidth: document.getElementById("stroke-width"),
     strokeControls: document.querySelector(".stroke-controls"),
     bgCustomField: document.querySelector(".bg-custom-field"),
+    panelBasic: document.getElementById("panel-basic"),
+    panelAdvanced: document.getElementById("panel-advanced"),
+    rotateColors: document.getElementById("rotate-colors"),
+    flipColors: document.getElementById("flip-colors"),
+    rotateTexts: document.getElementById("rotate-texts"),
+    flipTexts: document.getElementById("flip-texts"),
     texts: Object.fromEntries(KEYS.map((k) => [k, document.getElementById(`text-${k}`)])),
     colors: {
       top: document.getElementById("color-top"),
       left: document.getElementById("color-left"),
       right: document.getElementById("color-right"),
-      label: document.getElementById("label-color"),
+      exclusive: document.getElementById("color-exclusive"),
+      overlap: document.getElementById("color-overlap"),
+      center: document.getElementById("color-center"),
+      title: document.getElementById("title-color"),
       stroke: document.getElementById("stroke-color"),
       bg: document.getElementById("bg-color"),
     },
@@ -172,9 +283,26 @@
       top: document.getElementById("color-top-hex"),
       left: document.getElementById("color-left-hex"),
       right: document.getElementById("color-right-hex"),
-      label: document.getElementById("label-color-hex"),
+      exclusive: document.getElementById("color-exclusive-hex"),
+      overlap: document.getElementById("color-overlap-hex"),
+      center: document.getElementById("color-center-hex"),
+      title: document.getElementById("title-color-hex"),
       stroke: document.getElementById("stroke-color-hex"),
       bg: document.getElementById("bg-color-hex"),
+    },
+    fonts: {
+      exclusive: document.getElementById("font-exclusive"),
+      overlap: document.getElementById("font-overlap"),
+      center: document.getElementById("font-center"),
+      title1: document.getElementById("title-font1"),
+      title2: document.getElementById("title-font2"),
+    },
+    fontCustoms: {
+      exclusive: document.getElementById("font-exclusive-custom"),
+      overlap: document.getElementById("font-overlap-custom"),
+      center: document.getElementById("font-center-custom"),
+      title1: document.getElementById("title-font1-custom"),
+      title2: document.getElementById("title-font2-custom"),
     },
   };
 
@@ -187,11 +315,20 @@
     return v === "zh" || v === "en" ? v : null;
   }
 
+  function safeParse(raw) {
+    try {
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
   const stored = safeParse(localStorage.getItem("impossible-triangle"));
   const urlLang = langFromUrl();
   const savedLang = stored?.langMode;
   const langMode = urlLang || (savedLang === "zh" || savedLang === "en" ? savedLang : "system");
   const initialLang = langMode === "system" ? detectSystemLang() : langMode;
+  const legacyLabel = stored?.labelColor || "#1C1714";
 
   const state = {
     langMode,
@@ -200,13 +337,28 @@
       ? { ...SAMPLE[initialLang], ...(stored.texts || {}) }
       : { ...SAMPLE[initialLang] },
     colors: { ...PRESETS.morandi, ...(stored?.colors || {}) },
-    labelColor: stored?.labelColor || "#1C1714",
     autoContrast: stored?.autoContrast ?? true,
+    colorExclusive: stored?.colorExclusive || legacyLabel,
+    colorOverlap: stored?.colorOverlap || legacyLabel,
+    colorCenter: stored?.colorCenter || legacyLabel,
+    fontExclusive: stored?.fontExclusive || "Noto Sans SC",
+    fontOverlap: stored?.fontOverlap || "Noto Sans SC",
+    fontCenter: stored?.fontCenter || "Noto Sans SC",
     fontSizeCenter: stored?.fontSizeCenter ?? stored?.fontSize ?? 32,
     fontSizeOverlap: stored?.fontSizeOverlap ?? stored?.fontSize ?? 32,
     fontSizeExclusive: stored?.fontSizeExclusive ?? stored?.fontSize ?? 32,
     overlapDist: stored?.overlapDist ?? 0.46,
     exclusiveRatio: stored?.exclusiveRatio ?? 0.66,
+    layout: stored?.layout === "two-top" ? "two-top" : "one-top",
+    titleEnabled: stored?.titleEnabled ?? false,
+    titleLine1: stored?.titleLine1 || "",
+    titleLine2: stored?.titleLine2 || "",
+    titleColor: stored?.titleColor || "#1C1714",
+    titleGap: stored?.titleGap ?? 0.08,
+    titleFont1: stored?.titleFont1 || "Noto Sans SC",
+    titleFont2: stored?.titleFont2 || "Noto Sans SC",
+    titleSize1: stored?.titleSize1 ?? 42,
+    titleSize2: stored?.titleSize2 ?? 28,
     strokeEnabled: stored?.strokeEnabled ?? false,
     strokeColor: stored?.strokeColor || "#1C1714",
     strokeWidth: stored?.strokeWidth || 4,
@@ -214,15 +366,8 @@
     bgColor: stored?.bgColor || "#FFFFFF",
     preset: stored?.preset || "morandi",
     textsTouched: stored?.textsTouched ?? false,
+    activeTab: stored?.activeTab === "advanced" ? "advanced" : "basic",
   };
-
-  function safeParse(raw) {
-    try {
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  }
 
   function persist() {
     localStorage.setItem(
@@ -232,13 +377,28 @@
         lang: state.lang,
         texts: state.texts,
         colors: state.colors,
-        labelColor: state.labelColor,
         autoContrast: state.autoContrast,
+        colorExclusive: state.colorExclusive,
+        colorOverlap: state.colorOverlap,
+        colorCenter: state.colorCenter,
+        fontExclusive: state.fontExclusive,
+        fontOverlap: state.fontOverlap,
+        fontCenter: state.fontCenter,
         fontSizeCenter: state.fontSizeCenter,
         fontSizeOverlap: state.fontSizeOverlap,
         fontSizeExclusive: state.fontSizeExclusive,
         overlapDist: state.overlapDist,
         exclusiveRatio: state.exclusiveRatio,
+        layout: state.layout,
+        titleEnabled: state.titleEnabled,
+        titleLine1: state.titleLine1,
+        titleLine2: state.titleLine2,
+        titleColor: state.titleColor,
+        titleGap: state.titleGap,
+        titleFont1: state.titleFont1,
+        titleFont2: state.titleFont2,
+        titleSize1: state.titleSize1,
+        titleSize2: state.titleSize2,
         strokeEnabled: state.strokeEnabled,
         strokeColor: state.strokeColor,
         strokeWidth: state.strokeWidth,
@@ -246,6 +406,7 @@
         bgColor: state.bgColor,
         preset: state.preset,
         textsTouched: state.textsTouched,
+        activeTab: state.activeTab,
       })
     );
   }
@@ -375,15 +536,34 @@
     return null;
   }
 
-  function geometry(size) {
-    const R = size * 0.3;
+  function quoteFont(name) {
+    const cleaned = String(name || "Noto Sans SC").replace(/["']/g, "").trim() || "Noto Sans SC";
+    return `"${cleaned}", "Noto Sans SC", "Bricolage Grotesque", sans-serif`;
+  }
+
+  function titleActive() {
+    return state.titleEnabled && Boolean(state.titleLine1.trim() || state.titleLine2.trim());
+  }
+
+  function geometry(canvasSize, diagramSize, originY = 0) {
+    const R = diagramSize * 0.3;
     const D = R * 1.04;
-    const cx = size / 2;
-    const cy = size / 2 + size * 0.03;
+    const cx = canvasSize / 2;
+    const cy =
+      originY + diagramSize / 2 + diagramSize * 0.03 * (state.layout === "one-top" ? 1 : -1);
     const lift = D / Math.sqrt(3);
-    const top = { x: cx, y: cy - lift };
-    const left = { x: cx - D / 2, y: cy + lift / 2 };
-    const right = { x: cx + D / 2, y: cy + lift / 2 };
+    let top;
+    let left;
+    let right;
+    if (state.layout === "one-top") {
+      top = { x: cx, y: cy - lift };
+      left = { x: cx - D / 2, y: cy + lift / 2 };
+      right = { x: cx + D / 2, y: cy + lift / 2 };
+    } else {
+      top = { x: cx, y: cy + lift };
+      left = { x: cx - D / 2, y: cy - lift / 2 };
+      right = { x: cx + D / 2, y: cy - lift / 2 };
+    }
     const centroid = {
       x: (top.x + left.x + right.x) / 3,
       y: (top.y + left.y + right.y) / 3,
@@ -399,7 +579,8 @@
       return { x: from.x + (dx / len) * dist, y: from.y + (dy / len) * dist };
     };
     const mid = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-    const rim = (circle) => along(centroid, circle, Math.hypot(circle.x - centroid.x, circle.y - centroid.y) + R);
+    const rim = (circle) =>
+      along(centroid, circle, Math.hypot(circle.x - centroid.x, circle.y - centroid.y) + R);
     return {
       R,
       circles: { top, left, right },
@@ -459,8 +640,8 @@
     ctx.stroke();
   }
 
-  function drawLabel(ctx, text, pos, fill, size, maxWidth) {
-    ctx.font = `700 ${size}px "Noto Sans SC", "Bricolage Grotesque", sans-serif`;
+  function drawLabel(ctx, text, pos, fill, size, maxWidth, fontFamily) {
+    ctx.font = `700 ${size}px ${quoteFont(fontFamily)}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     const lines = wrapText(ctx, text, maxWidth);
@@ -469,6 +650,42 @@
     ctx.fillStyle = fill;
     lines.forEach((line, i) => {
       ctx.fillText(line, pos.x, startY + i * lh);
+    });
+  }
+
+  function drawTitle(ctx, size, diagramTop) {
+    if (!titleActive()) return;
+    const lines = [];
+    if (state.titleLine1.trim()) {
+      lines.push({
+        text: state.titleLine1,
+        size: (state.titleSize1 / 1000) * size,
+        font: state.titleFont1,
+      });
+    }
+    if (state.titleLine2.trim()) {
+      lines.push({
+        text: state.titleLine2,
+        size: (state.titleSize2 / 1000) * size,
+        font: state.titleFont2,
+      });
+    }
+    if (!lines.length) return;
+    const gap = state.titleGap * size;
+    const blockHeight = lines.reduce((h, line, i) => h + line.size * (i ? 1.28 : 1), 0);
+    let y = diagramTop - gap - blockHeight;
+    if (y < size * 0.02) y = size * 0.02;
+    ctx.fillStyle = state.titleColor;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    lines.forEach((line) => {
+      ctx.font = `700 ${line.size}px ${quoteFont(line.font)}`;
+      const wrapped = wrapText(ctx, line.text, size * 0.9);
+      const lh = line.size * 1.2;
+      wrapped.forEach((w, i) => {
+        ctx.fillText(w, size / 2, y + i * lh);
+      });
+      y += wrapped.length * lh + line.size * 0.12;
     });
   }
 
@@ -525,7 +742,10 @@
     canvas.width = pixelSize;
     canvas.height = pixelSize;
     const size = pixelSize;
-    const { R, circles, labels } = geometry(size);
+    const hasTitle = titleActive();
+    const diagramSize = hasTitle ? size * 0.78 : size;
+    const originY = hasTitle ? size - diagramSize : 0;
+    const { R, circles, labels } = geometry(size, diagramSize, originY);
     const fills = regionColors();
 
     ctx.clearRect(0, 0, size, size);
@@ -536,6 +756,8 @@
       ctx.fillStyle = state.bgColor;
       ctx.fillRect(0, 0, size, size);
     }
+
+    drawTitle(ctx, size, originY);
 
     const { top, left, right } = circles;
     paintRegion(ctx, size, [top], [left, right], fills.top, R);
@@ -553,20 +775,21 @@
       drawStrokedCircle(ctx, circles.right, R, state.strokeColor, sw);
     }
 
-    const fontByKey = {
-      top: state.fontSizeExclusive,
-      left: state.fontSizeExclusive,
-      right: state.fontSizeExclusive,
-      ab: state.fontSizeOverlap,
-      ac: state.fontSizeOverlap,
-      bc: state.fontSizeOverlap,
-      center: state.fontSizeCenter,
+    const styleByKey = {
+      top: { size: state.fontSizeExclusive, font: state.fontExclusive, color: state.colorExclusive },
+      left: { size: state.fontSizeExclusive, font: state.fontExclusive, color: state.colorExclusive },
+      right: { size: state.fontSizeExclusive, font: state.fontExclusive, color: state.colorExclusive },
+      ab: { size: state.fontSizeOverlap, font: state.fontOverlap, color: state.colorOverlap },
+      ac: { size: state.fontSizeOverlap, font: state.fontOverlap, color: state.colorOverlap },
+      bc: { size: state.fontSizeOverlap, font: state.fontOverlap, color: state.colorOverlap },
+      center: { size: state.fontSizeCenter, font: state.fontCenter, color: state.colorCenter },
     };
     const maxW = R * 0.92;
     KEYS.forEach((key) => {
-      const fontPx = (fontByKey[key] / 1000) * size;
-      const fill = state.autoContrast ? inkOn(fills[key]) : state.labelColor;
-      drawLabel(ctx, state.texts[key], labels[key], fill, fontPx, maxW);
+      const style = styleByKey[key];
+      const fontPx = (style.size / 1000) * size;
+      const fill = state.autoContrast ? inkOn(fills[key]) : style.color;
+      drawLabel(ctx, state.texts[key], labels[key], fill, fontPx, maxW, style.font);
     });
   }
 
@@ -583,8 +806,6 @@
     els.sheet.dataset.bg = state.bgMode === "transparent" ? "transparent" : "solid";
     if (state.bgMode === "custom") {
       els.sheet.style.background = state.bgColor;
-    } else if (state.bgMode === "white") {
-      els.sheet.style.background = "";
     } else {
       els.sheet.style.background = "";
     }
@@ -654,6 +875,30 @@
     if (next !== cur) history.replaceState(null, "", next);
   }
 
+  function layoutSuffix() {
+    return state.layout === "two-top" ? "Two" : "One";
+  }
+
+  function applyLayoutLabels(pack) {
+    const suffix = layoutSuffix();
+    const map = {
+      labelTop: pack[`labelTop${suffix}`] || pack.labelTop,
+      labelLeft: pack[`labelLeft${suffix}`] || pack.labelLeft,
+      labelRight: pack[`labelRight${suffix}`] || pack.labelRight,
+      labelAB: pack[`labelAB${suffix}`] || pack.labelAB,
+      labelAC: pack[`labelAC${suffix}`] || pack.labelAC,
+      labelBC: pack[`labelBC${suffix}`] || pack.labelBC,
+      colorTop: pack[`colorTop${suffix}`] || pack.colorTop,
+      colorLeft: pack[`colorLeft${suffix}`] || pack.colorLeft,
+      colorRight: pack[`colorRight${suffix}`] || pack.colorRight,
+    };
+    Object.entries(map).forEach(([key, value]) => {
+      document.querySelectorAll(`[data-i18n="${key}"]`).forEach((node) => {
+        node.textContent = value;
+      });
+    });
+  }
+
   function applyI18n() {
     const next = effectiveLang();
     const prev = state.lang;
@@ -672,12 +917,14 @@
       const key = node.getAttribute("data-i18n");
       if (pack[key]) node.textContent = pack[key];
     });
+    applyLayoutLabels(pack);
     KEYS.forEach((k) => {
       els.texts[k].title = pack.lineBreak;
     });
     document.querySelectorAll("[data-lang]").forEach((btn) => {
       btn.setAttribute("aria-pressed", String(btn.dataset.lang === state.lang));
     });
+    refreshFontSelectLabels();
   }
 
   function applyTheme() {
@@ -685,25 +932,90 @@
     els.html.dataset.theme = dark ? "dark" : "light";
   }
 
+  function populateFontSelect(select) {
+    select.innerHTML = "";
+    FONT_PRESETS.forEach((name) => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      select.appendChild(opt);
+    });
+    const custom = document.createElement("option");
+    custom.value = CUSTOM_FONT;
+    custom.dataset.i18nFontSystem = "1";
+    custom.textContent = I18N[state.lang].fontSystem;
+    select.appendChild(custom);
+  }
+
+  function refreshFontSelectLabels() {
+    document.querySelectorAll("option[data-i18n-font-system]").forEach((opt) => {
+      opt.textContent = I18N[state.lang].fontSystem;
+    });
+  }
+
+  function syncFontControl(key, value) {
+    const select = els.fonts[key];
+    const custom = els.fontCustoms[key];
+    const isPreset = FONT_PRESETS.includes(value);
+    select.value = isPreset ? value : CUSTOM_FONT;
+    custom.hidden = isPreset;
+    custom.value = isPreset ? "" : value;
+  }
+
+  function setTab(tab) {
+    state.activeTab = tab;
+    const basic = tab === "basic";
+    els.panelBasic.hidden = !basic;
+    els.panelAdvanced.hidden = basic;
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      const on = btn.dataset.tab === tab;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-selected", String(on));
+    });
+  }
+
   function syncForm() {
     KEYS.forEach((k) => {
       els.texts[k].value = state.texts[k] ?? "";
       autosize(els.texts[k]);
     });
+    els.titleEnabled.checked = state.titleEnabled;
+    els.titleFields.hidden = !state.titleEnabled;
+    els.titleLine1.value = state.titleLine1;
+    els.titleLine2.value = state.titleLine2;
+    autosize(els.titleLine1);
+    autosize(els.titleLine2);
+    els.titleGap.value = String(Math.round(state.titleGap * 100));
+    els.titleSize1.value = String(state.titleSize1);
+    els.titleSize2.value = String(state.titleSize2);
     els.colors.top.value = state.colors.top;
     els.colors.left.value = state.colors.left;
     els.colors.right.value = state.colors.right;
     els.hex.top.value = state.colors.top;
     els.hex.left.value = state.colors.left;
     els.hex.right.value = state.colors.right;
-    els.colors.label.value = state.labelColor;
-    els.hex.label.value = state.labelColor;
+    els.colors.exclusive.value = state.colorExclusive;
+    els.colors.overlap.value = state.colorOverlap;
+    els.colors.center.value = state.colorCenter;
+    els.colors.title.value = state.titleColor;
+    els.hex.exclusive.value = state.colorExclusive;
+    els.hex.overlap.value = state.colorOverlap;
+    els.hex.center.value = state.colorCenter;
+    els.hex.title.value = state.titleColor;
     els.autoContrast.checked = state.autoContrast;
     els.fontSizeCenter.value = String(state.fontSizeCenter);
     els.fontSizeOverlap.value = String(state.fontSizeOverlap);
     els.fontSizeExclusive.value = String(state.fontSizeExclusive);
     els.overlapDist.value = String(Math.round(state.overlapDist * 100));
     els.exclusiveRatio.value = String(Math.round(state.exclusiveRatio * 100));
+    syncFontControl("exclusive", state.fontExclusive);
+    syncFontControl("overlap", state.fontOverlap);
+    syncFontControl("center", state.fontCenter);
+    syncFontControl("title1", state.titleFont1);
+    syncFontControl("title2", state.titleFont2);
+    document.querySelectorAll("input[name='layout-mode']").forEach((input) => {
+      input.checked = input.value === state.layout;
+    });
     els.strokeEnabled.checked = state.strokeEnabled;
     els.strokeControls.hidden = !state.strokeEnabled;
     els.colors.stroke.value = state.strokeColor;
@@ -718,6 +1030,7 @@
     document.querySelectorAll("[data-preset]").forEach((btn) => {
       btn.classList.toggle("is-active", btn.dataset.preset === state.preset);
     });
+    setTab(state.activeTab);
   }
 
   function bindColorPair(colorEl, hexEl, onChange) {
@@ -749,6 +1062,76 @@
     el.style.height = `${Math.max(32, el.scrollHeight)}px`;
   }
 
+  function rotateColorsClockwise() {
+    const { top, left, right } = state.colors;
+    state.colors = { top: left, right: top, left: right };
+    detectPreset();
+  }
+
+  function flipColorsLR() {
+    const { top, left, right } = state.colors;
+    state.colors = { top, left: right, right: left };
+    detectPreset();
+  }
+
+  function rotateTextsClockwise() {
+    const t = state.texts;
+    state.texts = {
+      top: t.left,
+      right: t.top,
+      left: t.right,
+      ab: t.bc,
+      ac: t.ab,
+      bc: t.ac,
+      center: t.center,
+    };
+    state.textsTouched = true;
+  }
+
+  function flipTextsLR() {
+    const t = state.texts;
+    state.texts = {
+      top: t.top,
+      left: t.right,
+      right: t.left,
+      ab: t.ac,
+      ac: t.ab,
+      bc: t.bc,
+      center: t.center,
+    };
+    state.textsTouched = true;
+  }
+
+  function bindFontControl(key, stateKey) {
+    const select = els.fonts[key];
+    const custom = els.fontCustoms[key];
+    select.addEventListener("change", () => {
+      if (select.value === CUSTOM_FONT) {
+        custom.hidden = false;
+        custom.focus();
+        if (custom.value.trim()) {
+          state[stateKey] = custom.value.trim();
+          persist();
+          preview();
+        }
+        return;
+      }
+      custom.hidden = true;
+      state[stateKey] = select.value;
+      persist();
+      preview();
+    });
+    custom.addEventListener("change", () => {
+      const name = custom.value.trim();
+      if (!name) return;
+      state[stateKey] = name;
+      persist();
+      preview();
+    });
+  }
+
+  Object.values(els.fonts).forEach(populateFontSelect);
+
   KEYS.forEach((k) => {
     const el = els.texts[k];
     el.addEventListener("keydown", (e) => {
@@ -759,6 +1142,21 @@
     el.addEventListener("input", () => {
       state.texts[k] = el.value;
       state.textsTouched = true;
+      autosize(el);
+      persist();
+      preview();
+    });
+  });
+
+  ["titleLine1", "titleLine2"].forEach((key) => {
+    const el = els[key];
+    el.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      if (e.shiftKey) return;
+      e.preventDefault();
+    });
+    el.addEventListener("input", () => {
+      state[key] = el.value;
       autosize(el);
       persist();
       preview();
@@ -786,8 +1184,23 @@
     persist();
     preview();
   });
-  bindColorPair(els.colors.label, els.hex.label, (hex) => {
-    state.labelColor = hex;
+  bindColorPair(els.colors.exclusive, els.hex.exclusive, (hex) => {
+    state.colorExclusive = hex;
+    persist();
+    preview();
+  });
+  bindColorPair(els.colors.overlap, els.hex.overlap, (hex) => {
+    state.colorOverlap = hex;
+    persist();
+    preview();
+  });
+  bindColorPair(els.colors.center, els.hex.center, (hex) => {
+    state.colorCenter = hex;
+    persist();
+    preview();
+  });
+  bindColorPair(els.colors.title, els.hex.title, (hex) => {
+    state.titleColor = hex;
     persist();
     preview();
   });
@@ -802,8 +1215,20 @@
     preview();
   });
 
+  bindFontControl("exclusive", "fontExclusive");
+  bindFontControl("overlap", "fontOverlap");
+  bindFontControl("center", "fontCenter");
+  bindFontControl("title1", "titleFont1");
+  bindFontControl("title2", "titleFont2");
+
   els.autoContrast.addEventListener("change", () => {
     state.autoContrast = els.autoContrast.checked;
+    persist();
+    preview();
+  });
+  els.titleEnabled.addEventListener("change", () => {
+    state.titleEnabled = els.titleEnabled.checked;
+    els.titleFields.hidden = !state.titleEnabled;
     persist();
     preview();
   });
@@ -819,6 +1244,21 @@
   });
   els.fontSizeExclusive.addEventListener("input", () => {
     state.fontSizeExclusive = Number(els.fontSizeExclusive.value);
+    persist();
+    preview();
+  });
+  els.titleSize1.addEventListener("input", () => {
+    state.titleSize1 = Number(els.titleSize1.value);
+    persist();
+    preview();
+  });
+  els.titleSize2.addEventListener("input", () => {
+    state.titleSize2 = Number(els.titleSize2.value);
+    persist();
+    preview();
+  });
+  els.titleGap.addEventListener("input", () => {
+    state.titleGap = Number(els.titleGap.value) / 100;
     persist();
     preview();
   });
@@ -854,6 +1294,16 @@
     });
   });
 
+  document.querySelectorAll("input[name='layout-mode']").forEach((input) => {
+    input.addEventListener("change", () => {
+      if (!input.checked) return;
+      state.layout = input.value;
+      applyLayoutLabels(I18N[state.lang]);
+      persist();
+      preview();
+    });
+  });
+
   document.querySelectorAll("[data-preset]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const preset = PRESETS[btn.dataset.preset];
@@ -877,6 +1327,38 @@
       persist();
       preview();
     });
+  });
+
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setTab(btn.dataset.tab);
+      persist();
+    });
+  });
+
+  els.rotateColors.addEventListener("click", () => {
+    rotateColorsClockwise();
+    syncForm();
+    persist();
+    preview();
+  });
+  els.flipColors.addEventListener("click", () => {
+    flipColorsLR();
+    syncForm();
+    persist();
+    preview();
+  });
+  els.rotateTexts.addEventListener("click", () => {
+    rotateTextsClockwise();
+    syncForm();
+    persist();
+    preview();
+  });
+  els.flipTexts.addEventListener("click", () => {
+    flipTextsLR();
+    syncForm();
+    persist();
+    preview();
   });
 
   els.download.addEventListener("click", () => {

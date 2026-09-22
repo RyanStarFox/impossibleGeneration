@@ -55,7 +55,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@500;700&family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -104,229 +104,372 @@
       </section>
 
       <aside class="ticket" aria-label="Controls">
+        <div class="tab-bar" role="tablist" aria-label="Settings">
+          <button type="button" class="tab-btn is-active" role="tab" id="tab-basic" data-tab="basic" aria-controls="panel-basic" aria-selected="true">
+            <span data-i18n="tabBasic">基础设置</span>
+          </button>
+          <button type="button" class="tab-btn" role="tab" id="tab-advanced" data-tab="advanced" aria-controls="panel-advanced" aria-selected="false">
+            <span data-i18n="tabAdvanced">高级设置</span>
+          </button>
+        </div>
         <form id="controls" onsubmit="return false">
-          <fieldset>
-            <legend data-i18n="copyLegend">文字</legend>
-            <div class="venn-fields">
-              <label class="field area-top">
-                <span data-i18n="labelTop">上圆</span>
-                <textarea id="text-top" rows="1" maxlength="80" autocomplete="off"></textarea>
+          <div id="panel-basic" class="tab-panel" role="tabpanel" aria-labelledby="tab-basic">
+            <fieldset>
+              <legend data-i18n="titleLegend">标题</legend>
+              <label class="check">
+                <input type="checkbox" id="title-enabled" />
+                <span data-i18n="titleEnabled">显示标题</span>
               </label>
-              <label class="field area-ab">
-                <span data-i18n="labelAB">上 ∩ 左</span>
-                <textarea id="text-ab" rows="1" maxlength="80" autocomplete="off"></textarea>
-              </label>
-              <label class="field area-center">
-                <span data-i18n="labelCenter">三圆交汇</span>
-                <textarea id="text-center" rows="1" maxlength="80" autocomplete="off"></textarea>
-              </label>
-              <label class="field area-ac">
-                <span data-i18n="labelAC">上 ∩ 右</span>
-                <textarea id="text-ac" rows="1" maxlength="80" autocomplete="off"></textarea>
-              </label>
-              <label class="field area-left">
-                <span data-i18n="labelLeft">左圆</span>
-                <textarea id="text-left" rows="1" maxlength="80" autocomplete="off"></textarea>
-              </label>
-              <label class="field area-bc">
-                <span data-i18n="labelBC">左 ∩ 右</span>
-                <textarea id="text-bc" rows="1" maxlength="80" autocomplete="off"></textarea>
-              </label>
-              <label class="field area-right">
-                <span data-i18n="labelRight">右圆</span>
-                <textarea id="text-right" rows="1" maxlength="80" autocomplete="off"></textarea>
-              </label>
-            </div>
-            <div class="row">
-              <label class="field grow">
-                <span data-i18n="fontSizeCenter">三重叠字号</span>
-                <input type="range" id="font-size-center" min="18" max="56" value="32" />
-              </label>
-              <label class="field grow">
-                <span data-i18n="fontSizeOverlap">二重叠字号</span>
-                <input type="range" id="font-size-overlap" min="18" max="56" value="32" />
-              </label>
-            </div>
-            <div class="row">
-              <label class="field grow">
-                <span data-i18n="fontSizeExclusive">不重叠字号</span>
-                <input type="range" id="font-size-exclusive" min="18" max="56" value="32" />
-              </label>
-              <label class="field color-field">
-                <span data-i18n="labelColor">文字颜色</span>
-                <span class="swatch-wrap">
-                  <input type="color" id="label-color" value="#1C1714" />
-                  <input type="text" id="label-color-hex" class="hex" spellcheck="false" value="#1C1714" />
-                </span>
-              </label>
-            </div>
-            <div class="row">
-              <label class="field grow">
-                <span data-i18n="overlapDist">重叠文字到中心</span>
-                <input type="range" id="overlap-dist" min="12" max="112" value="46" />
-              </label>
-              <label class="field grow">
-                <span data-i18n="exclusiveRatio">独占文字到中心</span>
-                <input type="range" id="exclusive-ratio" min="40" max="92" value="66" />
-              </label>
-            </div>
-            <label class="check">
-              <input type="checkbox" id="auto-contrast" checked />
-              <span data-i18n="autoContrast">按叠色自动黑白字</span>
-            </label>
-          </fieldset>
+              <div class="title-fields" id="title-fields" hidden>
+                <label class="field">
+                  <span data-i18n="titleLine1">标题第 1 行</span>
+                  <textarea id="title-line1" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field">
+                  <span data-i18n="titleLine2">标题第 2 行（可选）</span>
+                  <textarea id="title-line2" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+              </div>
+            </fieldset>
 
-          <fieldset>
-            <legend data-i18n="inkLegend">油墨</legend>
-            <div class="presets" role="group" aria-label="Color presets">
-              <button type="button" class="preset-btn is-active" data-preset="morandi">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#C46B6B"></i>
-                  <i style="background:#D4C07A"></i>
-                  <i style="background:#6B8FA8"></i>
-                </span>
-                <span data-i18n="presetMorandi">莫兰迪</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="standard">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#FF0000"></i>
-                  <i style="background:#FFFF00"></i>
-                  <i style="background:#0000FF"></i>
-                </span>
-                <span data-i18n="presetStandard">标准红黄蓝</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="pastel">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#E8A4A1"></i>
-                  <i style="background:#E6D18A"></i>
-                  <i style="background:#9BB8D4"></i>
-                </span>
-                <span data-i18n="presetPastel">马卡龙</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="ukiyo">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#C44536"></i>
-                  <i style="background:#E2B13C"></i>
-                  <i style="background:#2F4A78"></i>
-                </span>
-                <span data-i18n="presetUkiyo">浮世绘</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="sunset">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#E85D4C"></i>
-                  <i style="background:#F0B429"></i>
-                  <i style="background:#4A5D8A"></i>
-                </span>
-                <span data-i18n="presetSunset">晚霞</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="pop">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#F03A47"></i>
-                  <i style="background:#FFD23F"></i>
-                  <i style="background:#2D5BE3"></i>
-                </span>
-                <span data-i18n="presetPop">波普</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="tea">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#B85C38"></i>
-                  <i style="background:#C9B56A"></i>
-                  <i style="background:#4F7A8C"></i>
-                </span>
-                <span data-i18n="presetTea">草木</span>
-              </button>
-              <button type="button" class="preset-btn" data-preset="candy">
-                <span class="preset-dots" aria-hidden="true">
-                  <i style="background:#FF6B9D"></i>
-                  <i style="background:#FFE566"></i>
-                  <i style="background:#6EC6FF"></i>
-                </span>
-                <span data-i18n="presetCandy">糖果</span>
-              </button>
-            </div>
-            <div class="ink-grid">
-              <label class="field color-field">
-                <span data-i18n="colorTop">上圆颜色</span>
-                <span class="swatch-wrap">
-                  <input type="color" id="color-top" value="#C46B6B" />
-                  <input type="text" id="color-top-hex" class="hex" spellcheck="false" value="#C46B6B" />
-                </span>
+            <fieldset>
+              <legend data-i18n="copyLegend">文字</legend>
+              <div class="venn-fields">
+                <label class="field area-top">
+                  <span data-i18n="labelTop">上圆</span>
+                  <textarea id="text-top" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field area-ab">
+                  <span data-i18n="labelAB">上 ∩ 左</span>
+                  <textarea id="text-ab" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field area-center">
+                  <span data-i18n="labelCenter">三圆交汇</span>
+                  <textarea id="text-center" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field area-ac">
+                  <span data-i18n="labelAC">上 ∩ 右</span>
+                  <textarea id="text-ac" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field area-left">
+                  <span data-i18n="labelLeft">左圆</span>
+                  <textarea id="text-left" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field area-bc">
+                  <span data-i18n="labelBC">左 ∩ 右</span>
+                  <textarea id="text-bc" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+                <label class="field area-right">
+                  <span data-i18n="labelRight">右圆</span>
+                  <textarea id="text-right" rows="1" maxlength="80" autocomplete="off"></textarea>
+                </label>
+              </div>
+              <label class="check">
+                <input type="checkbox" id="auto-contrast" checked />
+                <span data-i18n="autoContrast">按叠色自动黑白字</span>
               </label>
-              <label class="field color-field">
-                <span data-i18n="colorLeft">左圆颜色</span>
-                <span class="swatch-wrap">
-                  <input type="color" id="color-left" value="#6B8FA8" />
-                  <input type="text" id="color-left-hex" class="hex" spellcheck="false" value="#6B8FA8" />
-                </span>
-              </label>
-              <label class="field color-field">
-                <span data-i18n="colorRight">右圆颜色</span>
-                <span class="swatch-wrap">
-                  <input type="color" id="color-right" value="#D4C07A" />
-                  <input type="text" id="color-right-hex" class="hex" spellcheck="false" value="#D4C07A" />
-                </span>
-              </label>
-            </div>
-          </fieldset>
+            </fieldset>
 
-          <fieldset>
-            <legend data-i18n="plateLegend">印版</legend>
-            <label class="check">
-              <input type="checkbox" id="stroke-enabled" />
-              <span data-i18n="strokeEnabled">圆圈描边</span>
-            </label>
-            <div class="row stroke-controls" hidden>
-              <label class="field color-field">
-                <span data-i18n="strokeColor">描边颜色</span>
+            <fieldset>
+              <legend data-i18n="layoutLegend">布局</legend>
+              <div class="seg stock-seg" role="radiogroup" aria-label="Triangle layout">
+                <label class="seg-btn">
+                  <input type="radio" name="layout-mode" value="one-top" checked />
+                  <span data-i18n="layoutOneTop">上一下二</span>
+                </label>
+                <label class="seg-btn">
+                  <input type="radio" name="layout-mode" value="two-top" />
+                  <span data-i18n="layoutTwoTop">上二下一</span>
+                </label>
+              </div>
+              <div class="tool-grid" role="group" aria-label="Rearrange">
+                <button type="button" class="tool-btn" id="rotate-colors" data-i18n="rotateColors">颜色顺时针</button>
+                <button type="button" class="tool-btn" id="flip-colors" data-i18n="flipColors">颜色左右翻</button>
+                <button type="button" class="tool-btn" id="rotate-texts" data-i18n="rotateTexts">文字顺时针</button>
+                <button type="button" class="tool-btn" id="flip-texts" data-i18n="flipTexts">文字左右翻</button>
+              </div>
+              <p class="hint tight" data-i18n="rearrangeHint">只重排槽位，不旋转画面。</p>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="inkLegend">油墨</legend>
+              <div class="presets" role="group" aria-label="Color presets">
+                <button type="button" class="preset-btn is-active" data-preset="morandi">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#C46B6B"></i>
+                    <i style="background:#D4C07A"></i>
+                    <i style="background:#6B8FA8"></i>
+                  </span>
+                  <span data-i18n="presetMorandi">莫兰迪</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="standard">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#FF0000"></i>
+                    <i style="background:#FFFF00"></i>
+                    <i style="background:#0000FF"></i>
+                  </span>
+                  <span data-i18n="presetStandard">标准红黄蓝</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="pastel">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#E8A4A1"></i>
+                    <i style="background:#E6D18A"></i>
+                    <i style="background:#9BB8D4"></i>
+                  </span>
+                  <span data-i18n="presetPastel">马卡龙</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="ukiyo">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#C44536"></i>
+                    <i style="background:#E2B13C"></i>
+                    <i style="background:#2F4A78"></i>
+                  </span>
+                  <span data-i18n="presetUkiyo">浮世绘</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="sunset">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#E85D4C"></i>
+                    <i style="background:#F0B429"></i>
+                    <i style="background:#4A5D8A"></i>
+                  </span>
+                  <span data-i18n="presetSunset">晚霞</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="pop">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#F03A47"></i>
+                    <i style="background:#FFD23F"></i>
+                    <i style="background:#2D5BE3"></i>
+                  </span>
+                  <span data-i18n="presetPop">波普</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="tea">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#B85C38"></i>
+                    <i style="background:#C9B56A"></i>
+                    <i style="background:#4F7A8C"></i>
+                  </span>
+                  <span data-i18n="presetTea">草木</span>
+                </button>
+                <button type="button" class="preset-btn" data-preset="candy">
+                  <span class="preset-dots" aria-hidden="true">
+                    <i style="background:#FF6B9D"></i>
+                    <i style="background:#FFE566"></i>
+                    <i style="background:#6EC6FF"></i>
+                  </span>
+                  <span data-i18n="presetCandy">糖果</span>
+                </button>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="plateLegend">印版</legend>
+              <label class="check">
+                <input type="checkbox" id="stroke-enabled" />
+                <span data-i18n="strokeEnabled">圆圈描边</span>
+              </label>
+              <div class="row stroke-controls" hidden>
+                <label class="field color-field">
+                  <span data-i18n="strokeColor">描边颜色</span>
+                  <span class="swatch-wrap">
+                    <input type="color" id="stroke-color" value="#1C1714" />
+                    <input type="text" id="stroke-color-hex" class="hex" spellcheck="false" value="#1C1714" />
+                  </span>
+                </label>
+                <label class="field grow">
+                  <span data-i18n="strokeWidth">描边粗细</span>
+                  <input type="range" id="stroke-width" min="1" max="16" value="4" />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="stockLegend">纸张</legend>
+              <div class="seg stock-seg" role="radiogroup" aria-label="Background">
+                <label class="seg-btn">
+                  <input type="radio" name="bg-mode" value="white" />
+                  <span data-i18n="bgWhite">白底</span>
+                </label>
+                <label class="seg-btn">
+                  <input type="radio" name="bg-mode" value="transparent" checked />
+                  <span data-i18n="bgTransparent">透明底</span>
+                </label>
+                <label class="seg-btn">
+                  <input type="radio" name="bg-mode" value="custom" />
+                  <span data-i18n="bgCustom">自定义</span>
+                </label>
+              </div>
+              <label class="field color-field bg-custom-field" hidden>
+                <span data-i18n="bgColor">背景颜色</span>
                 <span class="swatch-wrap">
-                  <input type="color" id="stroke-color" value="#1C1714" />
-                  <input type="text" id="stroke-color-hex" class="hex" spellcheck="false" value="#1C1714" />
+                  <input type="color" id="bg-color" value="#FFFFFF" />
+                  <input type="text" id="bg-color-hex" class="hex" spellcheck="false" value="#FFFFFF" />
                 </span>
               </label>
-              <label class="field grow">
-                <span data-i18n="strokeWidth">描边粗细</span>
-                <input type="range" id="stroke-width" min="1" max="16" value="4" />
-              </label>
-            </div>
-          </fieldset>
+            </fieldset>
+          </div>
 
-          <fieldset>
-            <legend data-i18n="stockLegend">纸张</legend>
-            <div class="seg stock-seg" role="radiogroup" aria-label="Background">
-              <label class="seg-btn">
-                <input type="radio" name="bg-mode" value="white" />
-                <span data-i18n="bgWhite">白底</span>
-              </label>
-              <label class="seg-btn">
-                <input type="radio" name="bg-mode" value="transparent" checked />
-                <span data-i18n="bgTransparent">透明底</span>
-              </label>
-              <label class="seg-btn">
-                <input type="radio" name="bg-mode" value="custom" />
-                <span data-i18n="bgCustom">自定义</span>
-              </label>
-            </div>
-            <label class="field color-field bg-custom-field" hidden>
-              <span data-i18n="bgColor">背景颜色</span>
-              <span class="swatch-wrap">
-                <input type="color" id="bg-color" value="#FFFFFF" />
-                <input type="text" id="bg-color-hex" class="hex" spellcheck="false" value="#FFFFFF" />
-              </span>
-            </label>
-          </fieldset>
+          <div id="panel-advanced" class="tab-panel" role="tabpanel" aria-labelledby="tab-advanced" hidden>
+            <fieldset>
+              <legend data-i18n="styleLegend">文字样式</legend>
+              <div class="style-stack">
+                <div class="style-card" data-style="title">
+                  <p class="style-card-title" data-i18n="styleTitle">标题</p>
+                  <div class="style-grid">
+                    <label class="field color-field">
+                      <span data-i18n="styleColor">颜色</span>
+                      <span class="swatch-wrap">
+                        <input type="color" id="title-color" value="#1C1714" />
+                        <input type="text" id="title-color-hex" class="hex" spellcheck="false" value="#1C1714" />
+                      </span>
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="titleGap">离图距离</span>
+                      <input type="range" id="title-gap" min="2" max="28" value="8" />
+                    </label>
+                    <label class="field">
+                      <span data-i18n="titleFont1">第 1 行字体</span>
+                      <select id="title-font1" class="font-select"></select>
+                      <input type="text" id="title-font1-custom" class="font-custom" hidden spellcheck="false" placeholder="PingFang SC" />
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="titleSize1">第 1 行字号</span>
+                      <input type="range" id="title-size1" min="18" max="72" value="42" />
+                    </label>
+                    <label class="field">
+                      <span data-i18n="titleFont2">第 2 行字体</span>
+                      <select id="title-font2" class="font-select"></select>
+                      <input type="text" id="title-font2-custom" class="font-custom" hidden spellcheck="false" placeholder="PingFang SC" />
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="titleSize2">第 2 行字号</span>
+                      <input type="range" id="title-size2" min="14" max="56" value="28" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="style-card" data-style="exclusive">
+                  <p class="style-card-title" data-i18n="styleExclusive">一重叠</p>
+                  <div class="style-grid">
+                    <label class="field color-field">
+                      <span data-i18n="styleColor">颜色</span>
+                      <span class="swatch-wrap">
+                        <input type="color" id="color-exclusive" value="#1C1714" />
+                        <input type="text" id="color-exclusive-hex" class="hex" spellcheck="false" value="#1C1714" />
+                      </span>
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="exclusiveRatio">到中心距离</span>
+                      <input type="range" id="exclusive-ratio" min="40" max="92" value="66" />
+                    </label>
+                    <label class="field">
+                      <span data-i18n="styleFont">字体</span>
+                      <select id="font-exclusive" class="font-select"></select>
+                      <input type="text" id="font-exclusive-custom" class="font-custom" hidden spellcheck="false" placeholder="PingFang SC" />
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="styleSize">字号</span>
+                      <input type="range" id="font-size-exclusive" min="18" max="56" value="32" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="style-card" data-style="overlap">
+                  <p class="style-card-title" data-i18n="styleOverlap">二重叠</p>
+                  <div class="style-grid">
+                    <label class="field color-field">
+                      <span data-i18n="styleColor">颜色</span>
+                      <span class="swatch-wrap">
+                        <input type="color" id="color-overlap" value="#1C1714" />
+                        <input type="text" id="color-overlap-hex" class="hex" spellcheck="false" value="#1C1714" />
+                      </span>
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="overlapDist">到中心距离</span>
+                      <input type="range" id="overlap-dist" min="12" max="112" value="46" />
+                    </label>
+                    <label class="field">
+                      <span data-i18n="styleFont">字体</span>
+                      <select id="font-overlap" class="font-select"></select>
+                      <input type="text" id="font-overlap-custom" class="font-custom" hidden spellcheck="false" placeholder="PingFang SC" />
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="styleSize">字号</span>
+                      <input type="range" id="font-size-overlap" min="18" max="56" value="32" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="style-card" data-style="center">
+                  <p class="style-card-title" data-i18n="styleCenter">三重叠</p>
+                  <div class="style-grid">
+                    <label class="field color-field">
+                      <span data-i18n="styleColor">颜色</span>
+                      <span class="swatch-wrap">
+                        <input type="color" id="color-center" value="#1C1714" />
+                        <input type="text" id="color-center-hex" class="hex" spellcheck="false" value="#1C1714" />
+                      </span>
+                    </label>
+                    <label class="field">
+                      <span data-i18n="styleFont">字体</span>
+                      <select id="font-center" class="font-select"></select>
+                      <input type="text" id="font-center-custom" class="font-custom" hidden spellcheck="false" placeholder="PingFang SC" />
+                    </label>
+                    <label class="field grow">
+                      <span data-i18n="styleSize">字号</span>
+                      <input type="range" id="font-size-center" min="18" max="56" value="32" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="inkCustomLegend">图片颜色</legend>
+              <div class="ink-grid">
+                <label class="field color-field">
+                  <span data-i18n="colorTop">上圆颜色</span>
+                  <span class="swatch-wrap">
+                    <input type="color" id="color-top" value="#C46B6B" />
+                    <input type="text" id="color-top-hex" class="hex" spellcheck="false" value="#C46B6B" />
+                  </span>
+                </label>
+                <label class="field color-field">
+                  <span data-i18n="colorLeft">左圆颜色</span>
+                  <span class="swatch-wrap">
+                    <input type="color" id="color-left" value="#6B8FA8" />
+                    <input type="text" id="color-left-hex" class="hex" spellcheck="false" value="#6B8FA8" />
+                  </span>
+                </label>
+                <label class="field color-field">
+                  <span data-i18n="colorRight">右圆颜色</span>
+                  <span class="swatch-wrap">
+                    <input type="color" id="color-right" value="#D4C07A" />
+                    <input type="text" id="color-right-hex" class="hex" spellcheck="false" value="#D4C07A" />
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
         </form>
       </aside>
     </main>
 
     <footer class="colophon">
-      <p data-i18n="footer">叠色方式：颜料混合。红+蓝=紫，蓝+黄=绿，黄+红=橙。</p>
       <a
         class="repo-link"
         href="https://github.com/RyanStarFox/impossibleGeneration"
         target="_blank"
         rel="noopener noreferrer"
-        data-i18n="repoLink"
-      >GitHub 源码</a>
+        aria-label="GitHub"
+        title="GitHub"
+      >
+        <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.68 7.68 0 0 1 8 4.01c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+          />
+        </svg>
+      </a>
     </footer>
 
     <script src="app.js" defer></script>
