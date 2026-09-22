@@ -434,8 +434,7 @@ input:focus-visible {
   gap: 6px 10px;
 }
 
-.font-select,
-.font-custom {
+.font-select {
   width: 100%;
   border: 1px solid var(--rule);
   background: var(--sheet);
@@ -444,11 +443,6 @@ input:focus-visible {
   padding: 5px 8px;
   min-height: 32px;
   border-radius: var(--radius);
-}
-
-.font-custom {
-  margin-top: 4px;
-  font-family: var(--font-mono);
 }
 
 .colophon {
@@ -500,6 +494,13 @@ legend {
     "left bc right";
   gap: 6px;
   margin-bottom: 8px;
+}
+
+.venn-fields[data-layout="two-top"] {
+  grid-template-areas:
+    "left bc right"
+    "ab center ac"
+    ". top .";
 }
 
 .area-top { grid-area: top; }
@@ -676,6 +677,14 @@ input[type="color"] {
       "left right"
       "ab ac"
       "bc center";
+  }
+
+  .venn-fields[data-layout="two-top"] {
+    grid-template-areas:
+      "left right"
+      "bc center"
+      "ab ac"
+      "top top";
   }
 
   .row {

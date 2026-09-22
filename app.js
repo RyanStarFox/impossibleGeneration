@@ -10,16 +10,48 @@
     candy: { top: "#FF6B9D", left: "#6EC6FF", right: "#FFE566" },
   };
 
-  const FONT_PRESETS = [
-    "Noto Sans SC",
-    "Noto Serif SC",
-    "ZCOOL XiaoWei",
-    "ZCOOL QingKe HuangYou",
-    "Ma Shan Zheng",
-    "Long Cang",
-    "Bricolage Grotesque",
-    "IBM Plex Sans",
-    "IBM Plex Mono",
+  const FONT_PRESETS = ["Noto Sans SC", "Noto Serif SC"];
+
+  const SYSTEM_FONT_CANDIDATES = [
+    "PingFang SC",
+    "PingFang TC",
+    "Hiragino Sans GB",
+    "Hiragino Sans",
+    "Heiti SC",
+    "Songti SC",
+    "STHeiti",
+    "STSong",
+    "STKaiti",
+    "STFangsong",
+    "Apple LiGothic",
+    "Microsoft YaHei",
+    "Microsoft JhengHei",
+    "SimSun",
+    "SimHei",
+    "KaiTi",
+    "FangSong",
+    "DengXian",
+    "Source Han Sans SC",
+    "Source Han Serif SC",
+    "WenQuanYi Micro Hei",
+    "Noto Sans CJK SC",
+    "Noto Serif CJK SC",
+    "Arial",
+    "Helvetica",
+    "Helvetica Neue",
+    "Avenir",
+    "Avenir Next",
+    "Times New Roman",
+    "Georgia",
+    "Palatino",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "Courier New",
+    "SF Pro Text",
+    "Segoe UI",
+    "Tahoma",
+    "Verdana",
   ];
 
   const SAMPLE = {
@@ -110,7 +142,9 @@
       titleSize2: "第 2 行字号",
       overlapDist: "到中心距离",
       exclusiveRatio: "到中心距离",
-      fontSystem: "系统字体…",
+      fontPresetGroup: "预设字体",
+      fontSystemGroup: "系统字体",
+      fontSystemEmpty: "未检测到常用系统字体",
       presetMorandi: "莫兰迪",
       presetStandard: "标准红黄蓝",
       presetPastel: "马卡龙",
@@ -205,7 +239,9 @@
       titleSize2: "Line 2 size",
       overlapDist: "Distance to center",
       exclusiveRatio: "Distance to center",
-      fontSystem: "System font…",
+      fontPresetGroup: "Presets",
+      fontSystemGroup: "System fonts",
+      fontSystemEmpty: "No common system fonts found",
       presetMorandi: "Morandi",
       presetStandard: "Pure RYB",
       presetPastel: "Pastel",
@@ -237,7 +273,14 @@
   };
 
   const KEYS = ["top", "left", "right", "ab", "ac", "bc", "center"];
-  const CUSTOM_FONT = "__custom__";
+  const FONT_KEYS = ["exclusive", "overlap", "center", "title1", "title2"];
+  const FONT_STATE_KEYS = {
+    exclusive: "fontExclusive",
+    overlap: "fontOverlap",
+    center: "fontCenter",
+    title1: "titleFont1",
+    title2: "titleFont2",
+  };
 
   const els = {
     html: document.documentElement,
@@ -263,6 +306,7 @@
     bgCustomField: document.querySelector(".bg-custom-field"),
     panelBasic: document.getElementById("panel-basic"),
     panelAdvanced: document.getElementById("panel-advanced"),
+    vennFields: document.querySelector(".venn-fields"),
     rotateColors: document.getElementById("rotate-colors"),
     flipColors: document.getElementById("flip-colors"),
     rotateTexts: document.getElementById("rotate-texts"),
@@ -296,13 +340,6 @@
       center: document.getElementById("font-center"),
       title1: document.getElementById("title-font1"),
       title2: document.getElementById("title-font2"),
-    },
-    fontCustoms: {
-      exclusive: document.getElementById("font-exclusive-custom"),
-      overlap: document.getElementById("font-overlap-custom"),
-      center: document.getElementById("font-center-custom"),
-      title1: document.getElementById("title-font1-custom"),
-      title2: document.getElementById("title-font2-custom"),
     },
   };
 
@@ -932,34 +969,136 @@
     els.html.dataset.theme = dark ? "dark" : "light";
   }
 
-  function populateFontSelect(select) {
+  let systemFonts = [];
+
+  function detectInstalledFonts(candidates) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return [];
+    const size = 72;
+    const probe = "mmmmmmmmmmlli汉字字体测试";
+    const baselines = ["monospace", "serif", "sans-serif", "cursive"];
+    const baseWidths = {};
+    baselines.forEach((b) => {
+      ctx.font = `${size}px ${b}`;
+      baseWidths[b] = ctx.measureText(probe).width;
+    });
+    return candidates.filter((name) => {
+      if (FONT_PRESETS.includes(name)) return false;
+      return baselines.some((b) => {
+        ctx.font = `${size}px "${name}", ${b}`;
+        return ctx.measureText(probe).width !== baseWidths[b];
+      });
+    });
+  }
+
+  async function resolveSystemFonts() {
+    const probed = detectInstalledFonts(SYSTEM_FONT_CANDIDATES);
+    let local = [];
+    if (typeof window.queryLocalFonts === "function" && navigator.permissions?.query) {
+      try {
+        const status = await navigator.permissions.query({ name: "local-fonts" });
+        if (status.state === "granted") {
+          const fonts = await window.queryLocalFonts();
+          local = [...new Set(fonts.map((f) => f.family).filter(Boolean))].filter(
+            (name) => !FONT_PRESETS.includes(name)
+          );
+        }
+      } catch {
+        /* ignore unsupported permission name / denied */
+      }
+    }
+    systemFonts = [...new Set([...probed, ...local])].sort((a, b) =>
+      a.localeCompare(b, state.lang === "zh" ? "zh" : "en")
+    );
+    return systemFonts;
+  }
+
+  function populateFontSelect(select, selectedValue) {
+    const pack = I18N[state.lang];
+    const previous = selectedValue || select.value;
     select.innerHTML = "";
+
+    const presetGroup = document.createElement("optgroup");
+    presetGroup.label = pack.fontPresetGroup;
+    presetGroup.dataset.i18nFontGroup = "preset";
     FONT_PRESETS.forEach((name) => {
       const opt = document.createElement("option");
       opt.value = name;
       opt.textContent = name;
-      select.appendChild(opt);
+      presetGroup.appendChild(opt);
     });
-    const custom = document.createElement("option");
-    custom.value = CUSTOM_FONT;
-    custom.dataset.i18nFontSystem = "1";
-    custom.textContent = I18N[state.lang].fontSystem;
-    select.appendChild(custom);
+    select.appendChild(presetGroup);
+
+    const systemGroup = document.createElement("optgroup");
+    systemGroup.label = pack.fontSystemGroup;
+    systemGroup.dataset.i18nFontGroup = "system";
+    if (systemFonts.length) {
+      systemFonts.forEach((name) => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        systemGroup.appendChild(opt);
+      });
+    } else {
+      const empty = document.createElement("option");
+      empty.disabled = true;
+      empty.value = "";
+      empty.dataset.i18nFontEmpty = "1";
+      empty.textContent = pack.fontSystemEmpty;
+      systemGroup.appendChild(empty);
+    }
+    select.appendChild(systemGroup);
+
+    const available = new Set([...FONT_PRESETS, ...systemFonts]);
+    if (previous && available.has(previous)) {
+      select.value = previous;
+    } else if (previous && !available.has(previous)) {
+      const orphan = document.createElement("option");
+      orphan.value = previous;
+      orphan.textContent = previous;
+      systemGroup.appendChild(orphan);
+      select.value = previous;
+    } else {
+      select.value = FONT_PRESETS[0];
+    }
   }
 
   function refreshFontSelectLabels() {
-    document.querySelectorAll("option[data-i18n-font-system]").forEach((opt) => {
-      opt.textContent = I18N[state.lang].fontSystem;
+    const pack = I18N[state.lang];
+    document.querySelectorAll("optgroup[data-i18n-font-group='preset']").forEach((g) => {
+      g.label = pack.fontPresetGroup;
+    });
+    document.querySelectorAll("optgroup[data-i18n-font-group='system']").forEach((g) => {
+      g.label = pack.fontSystemGroup;
+    });
+    document.querySelectorAll("option[data-i18n-font-empty]").forEach((opt) => {
+      opt.textContent = pack.fontSystemEmpty;
     });
   }
 
   function syncFontControl(key, value) {
     const select = els.fonts[key];
-    const custom = els.fontCustoms[key];
-    const isPreset = FONT_PRESETS.includes(value);
-    select.value = isPreset ? value : CUSTOM_FONT;
-    custom.hidden = isPreset;
-    custom.value = isPreset ? "" : value;
+    const available = new Set([...FONT_PRESETS, ...systemFonts, value].filter(Boolean));
+    if (value && !available.has(value)) {
+      populateFontSelect(select, value);
+      return;
+    }
+    if (![...select.options].some((o) => o.value === value)) {
+      populateFontSelect(select, value);
+      return;
+    }
+    select.value = value || FONT_PRESETS[0];
+  }
+
+  function rebuildAllFontSelects() {
+    FONT_KEYS.forEach((key) => {
+      populateFontSelect(els.fonts[key], state[FONT_STATE_KEYS[key]]);
+    });
+  }
+
+  function applyVennFieldsLayout() {
+    if (els.vennFields) els.vennFields.dataset.layout = state.layout;
   }
 
   function setTab(tab) {
@@ -1016,6 +1155,7 @@
     document.querySelectorAll("input[name='layout-mode']").forEach((input) => {
       input.checked = input.value === state.layout;
     });
+    applyVennFieldsLayout();
     els.strokeEnabled.checked = state.strokeEnabled;
     els.strokeControls.hidden = !state.strokeEnabled;
     els.colors.stroke.value = state.strokeColor;
@@ -1104,33 +1244,18 @@
 
   function bindFontControl(key, stateKey) {
     const select = els.fonts[key];
-    const custom = els.fontCustoms[key];
     select.addEventListener("change", () => {
-      if (select.value === CUSTOM_FONT) {
-        custom.hidden = false;
-        custom.focus();
-        if (custom.value.trim()) {
-          state[stateKey] = custom.value.trim();
-          persist();
-          preview();
-        }
-        return;
-      }
-      custom.hidden = true;
+      if (!select.value) return;
       state[stateKey] = select.value;
-      persist();
-      preview();
-    });
-    custom.addEventListener("change", () => {
-      const name = custom.value.trim();
-      if (!name) return;
-      state[stateKey] = name;
       persist();
       preview();
     });
   }
 
-  Object.values(els.fonts).forEach(populateFontSelect);
+  FONT_KEYS.forEach((key) => populateFontSelect(els.fonts[key], state[FONT_STATE_KEYS[key]]));
+  resolveSystemFonts().then(() => {
+    rebuildAllFontSelects();
+  });
 
   KEYS.forEach((k) => {
     const el = els.texts[k];
@@ -1298,6 +1423,7 @@
     input.addEventListener("change", () => {
       if (!input.checked) return;
       state.layout = input.value;
+      applyVennFieldsLayout();
       applyLayoutLabels(I18N[state.lang]);
       persist();
       preview();
