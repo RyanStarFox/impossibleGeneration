@@ -464,16 +464,22 @@
       </aside>
     </main>
 
-    <p class="visit-count">
-      <span id="busuanzi_container_site_pv" style="display: none">
-        <span id="busuanzi_value_site_pv"></span>
-        <span data-i18n="visitPv">次访问</span>
-      </span>
-      <span id="busuanzi_container_site_uv" style="display: none">
-        <span id="busuanzi_value_site_uv"></span>
-        <span data-i18n="visitUv">位访客</span>
-      </span>
-    </p>
+    <footer class="colophon">
+      <p class="colophon-kicker">
+        <span class="reg-dot" aria-hidden="true"></span>
+        <span data-i18n="visitLegend">印数</span>
+      </p>
+      <div class="visit-count">
+        <span class="visit-stat" id="busuanzi_container_site_pv" style="display: none">
+          <span class="visit-num" id="busuanzi_value_site_pv"></span>
+          <span class="visit-label" data-i18n="visitPv">次访问</span>
+        </span>
+        <span class="visit-stat" id="busuanzi_container_site_uv" style="display: none">
+          <span class="visit-num" id="busuanzi_value_site_uv"></span>
+          <span class="visit-label" data-i18n="visitUv">位访客</span>
+        </span>
+      </div>
+    </footer>
 
     <script src="app.js" defer></script>
     <script defer src="https://vercount.one/js"></script>

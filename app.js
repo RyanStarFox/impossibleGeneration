@@ -171,6 +171,7 @@
       bgTransparent: "透明底",
       bgCustom: "自定义",
       bgColor: "背景颜色",
+      visitLegend: "印数",
       visitPv: "次访问",
       visitUv: "位访客",
       filename: "不可能三角",
@@ -270,8 +271,9 @@
       bgTransparent: "Transparent",
       bgCustom: "Custom",
       bgColor: "Background",
-      visitPv: "views",
-      visitUv: "visitors",
+      visitLegend: "Impression",
+      visitPv: "Views",
+      visitUv: "Visitors",
       filename: "impossible-triangle",
     },
   };
@@ -1514,6 +1516,28 @@
     preview();
   });
   window.addEventListener("resize", schedulePreview);
+
+  function formatCounts() {
+    const locale = state.lang === "zh" ? "zh-CN" : "en-US";
+    ["busuanzi_value_site_pv", "busuanzi_value_site_uv"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const digits = el.textContent.replace(/[^\d]/g, "");
+      if (!digits) return;
+      const formatted = Number(digits).toLocaleString(locale);
+      if (el.textContent !== formatted) el.textContent = formatted;
+    });
+  }
+
+  const countRoot = document.querySelector(".visit-count");
+  if (countRoot) {
+    formatCounts();
+    new MutationObserver(formatCounts).observe(countRoot, {
+      subtree: true,
+      characterData: true,
+      childList: true,
+    });
+  }
 
   applyI18n();
   applyTheme();

@@ -88,7 +88,7 @@ html[data-theme="dark"] .grain {
 
 .masthead,
 .bench,
-.visit-count {
+.colophon {
   width: min(1180px, calc(100% - 32px));
   margin-inline: auto;
 }
@@ -459,15 +459,80 @@ input:focus-visible {
   opacity: 1;
 }
 
-.visit-count {
+.colophon {
   display: flex;
-  justify-content: flex-end;
-  gap: 14px;
-  margin-top: 0;
-  padding: 8px 0 28px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  margin-bottom: 36px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.colophon:not(:has(#busuanzi_value_site_pv:not(:empty))) {
+  display: none;
+}
+
+.colophon-kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.reg-dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--press);
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--press), var(--press)) center / 10px 1px no-repeat,
+    linear-gradient(var(--press), var(--press)) center / 1px 10px no-repeat;
+}
+
+.visit-count {
+  display: flex;
+  min-width: min(100%, 280px);
+  background: var(--ticket);
+  border: 1px solid var(--rule);
+  box-shadow: inset 3px 0 0 var(--press);
+}
+
+.visit-stat {
+  display: flex !important;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 120px;
+  padding: 10px 16px 9px;
+}
+
+.visit-stat + .visit-stat {
+  border-left: 1px solid var(--rule-soft);
+}
+
+.visit-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.visit-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--ink-soft);
 }
 
@@ -699,6 +764,20 @@ input[type="color"] {
 }
 
 @media (max-width: 560px) {
+  .colophon {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .visit-count {
+    width: 100%;
+  }
+
+  .visit-stat {
+    min-width: 0;
+  }
+
   .sheet {
     padding: 12px 8px 8px;
   }
