@@ -87,7 +87,8 @@ html[data-theme="dark"] .grain {
 }
 
 .masthead,
-.bench {
+.bench,
+.visit-count {
   width: min(1180px, calc(100% - 32px));
   margin-inline: auto;
 }
@@ -456,6 +457,18 @@ input:focus-visible {
 .repo-link:hover {
   color: var(--press);
   opacity: 1;
+}
+
+.visit-count {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 0;
+  padding: 8px 0 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
 }
 
 fieldset {

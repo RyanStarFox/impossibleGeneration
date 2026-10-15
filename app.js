@@ -171,6 +171,8 @@
       bgTransparent: "透明底",
       bgCustom: "自定义",
       bgColor: "背景颜色",
+      visitPv: "次访问",
+      visitUv: "位访客",
       filename: "不可能三角",
     },
     en: {
@@ -268,6 +270,8 @@
       bgTransparent: "Transparent",
       bgCustom: "Custom",
       bgColor: "Background",
+      visitPv: "views",
+      visitUv: "visitors",
       filename: "impossible-triangle",
     },
   };
