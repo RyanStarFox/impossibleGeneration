@@ -115,6 +115,16 @@
             <span data-i18n="download">下载 PNG</span>
           </button>
           <p class="hint" data-i18n="exportHint">预览即成图。透明底会保留圆外的透明像素。</p>
+          <p class="visit-count">
+            <span class="visit-stat" id="busuanzi_container_site_pv" style="display: none">
+              <span class="visit-num" id="busuanzi_value_site_pv"></span>
+              <span class="visit-label" data-i18n="visitPv">次访问</span>
+            </span>
+            <span class="visit-stat" id="busuanzi_container_site_uv" style="display: none">
+              <span class="visit-num" id="busuanzi_value_site_uv"></span>
+              <span class="visit-label" data-i18n="visitUv">位访客</span>
+            </span>
+          </p>
         </div>
       </section>
 
@@ -463,23 +473,6 @@
         </form>
       </aside>
     </main>
-
-    <footer class="colophon">
-      <p class="colophon-kicker">
-        <span class="reg-dot" aria-hidden="true"></span>
-        <span data-i18n="visitLegend">印数</span>
-      </p>
-      <div class="visit-count">
-        <span class="visit-stat" id="busuanzi_container_site_pv" style="display: none">
-          <span class="visit-num" id="busuanzi_value_site_pv"></span>
-          <span class="visit-label" data-i18n="visitPv">次访问</span>
-        </span>
-        <span class="visit-stat" id="busuanzi_container_site_uv" style="display: none">
-          <span class="visit-num" id="busuanzi_value_site_uv"></span>
-          <span class="visit-label" data-i18n="visitUv">位访客</span>
-        </span>
-      </div>
-    </footer>
 
     <script src="app.js" defer></script>
     <script defer src="https://vercount.one/js"></script>

@@ -87,8 +87,7 @@ html[data-theme="dark"] .grain {
 }
 
 .masthead,
-.bench,
-.colophon {
+.bench {
   width: min(1180px, calc(100% - 32px));
   margin-inline: auto;
 }
@@ -293,6 +292,7 @@ html[data-theme="dark"] .sheet[data-bg="transparent"] {
 
 .export-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 16px;
 }
@@ -333,9 +333,50 @@ input:focus-visible {
 }
 
 .hint {
+  flex: 1;
+  min-width: 12em;
   margin: 0;
   font-size: 12px;
   color: var(--ink-soft);
+}
+
+.visit-count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin: 0 0 0 auto;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.visit-count:not(:has(#busuanzi_value_site_pv:not(:empty))) {
+  display: none;
+}
+
+.visit-stat {
+  display: inline-flex !important;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.visit-stat + .visit-stat::before {
+  content: "·";
+  margin-right: 11px;
+  color: var(--rule);
+}
+
+.visit-num {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.visit-label {
+  letter-spacing: 0.04em;
 }
 
 .ticket {
@@ -457,83 +498,6 @@ input:focus-visible {
 .repo-link:hover {
   color: var(--press);
   opacity: 1;
-}
-
-.colophon {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 4px;
-  margin-bottom: 36px;
-  padding-top: 16px;
-  border-top: 1px solid var(--rule-soft);
-}
-
-.colophon:not(:has(#busuanzi_value_site_pv:not(:empty))) {
-  display: none;
-}
-
-.colophon-kicker {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.reg-dot {
-  width: 10px;
-  height: 10px;
-  border: 1px solid var(--press);
-  border-radius: 50%;
-  background:
-    linear-gradient(var(--press), var(--press)) center / 10px 1px no-repeat,
-    linear-gradient(var(--press), var(--press)) center / 1px 10px no-repeat;
-}
-
-.visit-count {
-  display: flex;
-  min-width: min(100%, 280px);
-  background: var(--ticket);
-  border: 1px solid var(--rule);
-  box-shadow: inset 3px 0 0 var(--press);
-}
-
-.visit-stat {
-  display: flex !important;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  min-width: 120px;
-  padding: 10px 16px 9px;
-}
-
-.visit-stat + .visit-stat {
-  border-left: 1px solid var(--rule-soft);
-}
-
-.visit-num {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 26px;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  color: var(--ink);
-}
-
-.visit-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
 }
 
 fieldset {
@@ -761,23 +725,13 @@ input[type="color"] {
     flex-direction: column;
     align-items: stretch;
   }
+
+  .visit-count {
+    margin-left: 0;
+  }
 }
 
 @media (max-width: 560px) {
-  .colophon {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .visit-count {
-    width: 100%;
-  }
-
-  .visit-stat {
-    min-width: 0;
-  }
-
   .sheet {
     padding: 12px 8px 8px;
   }
